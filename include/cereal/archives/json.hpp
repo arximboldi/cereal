@@ -590,6 +590,28 @@ namespace cereal
       }
 
     public:
+
+      inline bool hasName(const char* name)
+      {
+          // The name an NVP provided with setNextName()
+          if (name)
+          {
+              // The actual name of the current node
+              auto const actualName = itsIteratorStack.back().name();
+              // Do a search if we don't see a name coming up, or if the names don't match
+              if (!actualName || std::strcmp(name, actualName) != 0) {
+                  auto&& iter = itsIteratorStack.back();
+                  try {
+                      iter.search(name);
+                      return true;
+                  } catch (const Exception&) {
+                      return false;
+                  }
+              }
+              return true;
+          }
+      }
+
       //! Starts a new node, going into its proper iterator
       /*! This places an iterator for the next node to be parsed onto the iterator stack.  If the next
           node is an array, this will be a value iterator, otherwise it will be a member iterator.

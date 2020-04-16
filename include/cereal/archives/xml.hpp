@@ -517,6 +517,17 @@ namespace cereal
         itsNodes.top().name = nullptr;
       }
 
+      //! Check if node with given name exists
+      inline bool hasName(const char * searchName)
+      {
+          auto next = itsNodes.top().child;
+          if (searchName && (next == nullptr || std::strcmp(next->name(), searchName) != 0))
+          {
+              next = itsNodes.top().search(searchName);
+          }
+          return next != nullptr;
+      }
+
       //! Retrieves the current node name
       //! will return @c nullptr if the node does not have a name
       const char * getNodeName() const
