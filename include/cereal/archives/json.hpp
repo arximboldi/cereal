@@ -591,6 +591,7 @@ namespace cereal
 
     public:
 
+      //! Check if node with given name exists
       inline bool hasName(const char* name)
       {
           // The name an NVP provided with setNextName()
@@ -604,6 +605,28 @@ namespace cereal
                   try {
                       iter.search(name);
                       return true;
+                  } catch (const Exception&) {
+                      return false;
+                  }
+              }
+              return true;
+          }
+      }
+
+      //! Check if node with given name exists and contains non null value
+      inline bool hasNameNonNull(const char* name)
+      {
+          // The name an NVP provided with setNextName()
+          if (name)
+          {
+              // The actual name of the current node
+              auto const actualName = itsIteratorStack.back().name();
+              // Do a search if we don't see a name coming up, or if the names don't match
+              if (!actualName || std::strcmp(name, actualName) != 0) {
+                  auto&& iter = itsIteratorStack.back();
+                  try {
+                      iter.search(name);
+                      return !iter.value().IsNull();
                   } catch (const Exception&) {
                       return false;
                   }

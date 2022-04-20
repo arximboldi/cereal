@@ -528,6 +528,11 @@ namespace cereal
           return next != nullptr;
       }
 
+      //! Check if node with given name exists and contains non null value
+      inline bool hasNameNonNull(const char * searchName) {
+          return hasName(searchName);
+      }
+
       //! Retrieves the current node name
       //! will return @c nullptr if the node does not have a name
       const char * getNodeName() const
