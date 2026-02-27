@@ -611,6 +611,7 @@ namespace cereal
               }
               return true;
           }
+          return false;
       }
 
       //! Check if node with given name exists and contains non null value
@@ -633,6 +634,7 @@ namespace cereal
               }
               return true;
           }
+          return false;
       }
 
       //! Starts a new node, going into its proper iterator
